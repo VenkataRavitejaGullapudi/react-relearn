@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+
 // Creating a element is a core thing of react, so it comes from the react library.
 const heading = React.createElement("h1", { id: "heading" }, "Hello world from React")
 
