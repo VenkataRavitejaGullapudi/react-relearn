@@ -6,6 +6,7 @@ export const RestaurantCard = ({ resData }) => {
       <img
         className="res-card__logo"
         src={CDN_URL + resData.cloudinaryImageId}
+        alt="restaurant logo"
       />
       <div className="res-card__data">
         <h3>{resData.name}</h3>
