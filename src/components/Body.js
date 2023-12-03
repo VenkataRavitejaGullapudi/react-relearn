@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useEffect, useState } from "react";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -53,39 +54,50 @@ const Body = () => {
     setFilteredRestaraurants(restaurants);
   }
 
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus === false) {
+    return (
+      <h1>
+        Looks like you are offline !! Please check your internet connection
+      </h1>
+    );
+  }
+
   return restaurants?.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filters">
-        <div className="search-filter">
+    <div className="body flex-col p-4 gap-5">
+      <div className="filters flex-col gap-5">
+        <div className="search-filter flex w-full">
           <input
             type="text"
-            className="search-box"
+            className="search-box rounded-s-lg flex-grow px-2 py-1 border-2 border-black "
             value={searchText}
             onChange={(event) => {
               setSearchText(event.target.value);
             }}
           />
-          <button className="search-btn" onClick={filterByText}>
+          <button className="search-btn cursor-pointer rounded-e-lg basis-8 bg-green-300 px-4 py-2" onClick={filterByText}>
             Search
           </button>
         </div>
-        <div className="quick-filters">
-          <button className="filter-btn" onClick={() => topRatedRestaurants()}>
+        <div className="quick-filters flex gap-5 my-4">
+          <button className="filter-btn cursor-pointer border-2 border-green-300 rounded-lg px-3" onClick={() => topRatedRestaurants()}>
             Top Rated Restaurants
           </button>
-          <button className="filter-btn" onClick={clearFilters}>
+          <button className="filter-btn cursor-pointer" onClick={clearFilters}>
             Clear filters
           </button>
         </div>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap gap-4">
         {/* Restaurant Card */}
         {
           /* Not using keys (not acceptable) <<< index <<<< unique id (best practice) */
           filteredRestaurants.map((restaurant) => (
             <Link
+            className="cursor-pointer"
               key={restaurant.info.id}
               to={"/restaurant/" + restaurant?.info?.id}
             >
