@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaraurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
@@ -17,7 +19,7 @@ const Body = () => {
 
   const fetchData = async () => {
     const url =
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4398772&lng=78.36573419999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4398772&lng=78.36573419999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
     let response = await fetch(url);
     response = await response.json();
     console.log(response);
@@ -35,7 +37,6 @@ const Body = () => {
     const filteredRestaurants = restaurants.filter(
       (restaurant) => restaurant.info?.avgRating >= minRating
     );
-    console.log(minRating);
     setFilteredRestaraurants(filteredRestaurants);
   }
 
@@ -45,7 +46,6 @@ const Body = () => {
         .toLowerCase()
         ?.includes(searchText.toLowerCase());
     });
-    console.log(filteredRestaurants);
     setFilteredRestaraurants(filteredRestaurants);
   }
 
@@ -94,6 +94,18 @@ const Body = () => {
           <button className="filter-btn cursor-pointer" onClick={clearFilters}>
             Clear filters
           </button>
+        </div>
+        <div className="m-5">
+          <label for="userName">
+            UserName:
+            <input
+              id="userName"
+              type="text"
+              className="border border-black m-2"
+              value={loggedInUser}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </label>
         </div>
       </div>
       <div className="res-container flex flex-wrap gap-4">

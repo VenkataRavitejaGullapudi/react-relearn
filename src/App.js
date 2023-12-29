@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,18 +7,27 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import UserContext from "./utils/UserContext";
 
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    setUserName("Raviteja");
+  }, []);
+
   return (
-    <div className="app">
-      <Header />
-      {/* To handleIf path is / about */}
-      {/* If path is /about about component..., we defined paths below */}
-      {/* Outlet is the output of the router, it means outlet component will be replaced by the route component */}
-      <Outlet />
-    </div>
+    <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
+      <div className="app">
+        <Header />
+        {/* To handleIf path is / about */}
+        {/* If path is /about about component..., we defined paths below */}
+        {/* Outlet is the output of the router, it means outlet component will be replaced by the route component */}
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 
