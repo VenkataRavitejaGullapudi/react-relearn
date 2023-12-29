@@ -6,7 +6,8 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
-  console.log(useState());
+  const [categoryShowIndex, setCategoryShowIndex] = useState(0);
+
   const { resId } = useParams();
 
   const resInfo = useRestaurantMenu(resId);
@@ -31,8 +32,21 @@ const RestaurantMenu = () => {
       <p className="font-bold text-lg">
         {cuisines} - {costForTwoMessage}
       </p>
-      {categories?.map((category) => {
-        return <RestaurantCategory key={category?.card?.card.title} data={category?.card?.card} />;
+      {categories?.map((category, index) => {
+        // Controlled component
+        return (
+          <RestaurantCategory
+            showItems={index === categoryShowIndex && true}
+            onHeadClick={() =>
+              categoryShowIndex === index
+                ? setCategoryShowIndex(-1)
+                : setCategoryShowIndex(index)
+            }
+            key={category?.card?.card.title}
+            data={category?.card?.card}
+            set
+          />
+        );
       })}
     </div>
   );
