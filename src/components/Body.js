@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useEffect, useState } from "react";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -9,25 +9,24 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaraurants] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const url =
-      "https://corsproxy.io/?" +
-      encodeURIComponent(
         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4398772&lng=78.36573419999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
     let response = await fetch(url);
     response = await response.json();
     console.log(response);
     setRestaurants(
-      response?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      response?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
     setFilteredRestaraurants(
-      response?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      response?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
   };
@@ -78,12 +77,18 @@ const Body = () => {
               setSearchText(event.target.value);
             }}
           />
-          <button className="search-btn cursor-pointer rounded-e-lg basis-8 bg-green-300 px-4 py-2" onClick={filterByText}>
+          <button
+            className="search-btn cursor-pointer rounded-e-lg basis-8 bg-green-300 px-4 py-2"
+            onClick={filterByText}
+          >
             Search
           </button>
         </div>
         <div className="quick-filters flex gap-5 my-4">
-          <button className="filter-btn cursor-pointer border-2 border-green-300 rounded-lg px-3" onClick={() => topRatedRestaurants()}>
+          <button
+            className="filter-btn cursor-pointer border-2 border-green-300 rounded-lg px-3"
+            onClick={() => topRatedRestaurants()}
+          >
             Top Rated Restaurants
           </button>
           <button className="filter-btn cursor-pointer" onClick={clearFilters}>
@@ -95,13 +100,17 @@ const Body = () => {
         {/* Restaurant Card */}
         {
           /* Not using keys (not acceptable) <<< index <<<< unique id (best practice) */
-          filteredRestaurants.map((restaurant) => (
+          filteredRestaurants?.map((restaurant) => (
             <Link
-            className="cursor-pointer"
+              className="cursor-pointer"
               key={restaurant.info.id}
               to={"/restaurant/" + restaurant?.info?.id}
             >
-              <RestaurantCard resData={restaurant.info} />
+              {restaurant?.info?.promoted ? (
+                <RestaurantCardPromoted resData={restaurant.info} />
+              ) : (
+                <RestaurantCard resData={restaurant.info} />
+              )}
             </Link>
           ))
         }
