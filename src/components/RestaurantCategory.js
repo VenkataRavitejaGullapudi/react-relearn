@@ -21,7 +21,7 @@ const RestaurantCategory = ({ data, showItems, onHeadClick }) => {
         onKeyDown={onKeyDown}
       >
         <span className="font-bold text-lg">
-          {data?.title}({data?.itemCards?.length})
+          {data?.title} ({data?.itemCards?.length})
         </span>
         <span>⬇️</span>
       </div>

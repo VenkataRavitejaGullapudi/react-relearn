@@ -71,6 +71,7 @@ const Body = () => {
         <div className="search-filter flex w-full">
           <input
             type="text"
+            data-testid="searchInput"
             className="search-box rounded-s-lg flex-grow px-2 py-1 border-2 border-black "
             value={searchText}
             onChange={(event) => {
@@ -96,7 +97,7 @@ const Body = () => {
           </button>
         </div>
         <div className="m-5">
-          <label for="userName">
+          <label htmlFor="userName">
             UserName:
             <input
               id="userName"

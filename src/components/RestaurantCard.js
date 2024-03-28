@@ -2,7 +2,7 @@ import { CDN_URL } from "../utils/constants";
 
 export const RestaurantCard = ({ resData }) => {
   return (
-    <div className="res-card rounded-md w-[250px] min-h-[380px] shadow-md">
+    <div data-testid="resCard" className="res-card rounded-md w-[250px] min-h-[380px] shadow-md">
       <img
         className="res-card__logo rounded-t-md w-full h-52"
         src={CDN_URL + resData.cloudinaryImageId}

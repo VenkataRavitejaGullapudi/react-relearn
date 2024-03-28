@@ -32,6 +32,22 @@
 - Selector - to get data from store by subscribing to store.
 
 
+# Developer Testing 
+(Developers mostly do below 2 types)
+- Unit Testing - ✅
+- Integration Testing - ✅
+
+
+
+## Setting up testing in our app
+- Install react testing library
+- Install jest
+- Install babel dependencies
+- Configure parcel config file to disable default bable transpilation
+- Writing jest configuration
+- Install jsdom
+- Install @babel/preset-react for rendering jsx
+- Install @testing-library/jest-dom
 
 # Food ordering app
 /* 

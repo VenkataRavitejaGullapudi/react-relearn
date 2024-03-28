@@ -14,6 +14,7 @@ const ItemList = ({ items }) => {
           <div
             className="text-left p-2 m-2 border-b-2 border-gray-200 flex"
             key={item?.card?.info?.id}
+            data-testid="foodItem"
           >
             <div className="w-9/12">
               <div className="py-2">

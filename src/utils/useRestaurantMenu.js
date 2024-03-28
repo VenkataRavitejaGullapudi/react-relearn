@@ -8,7 +8,7 @@ const useRestaurantMenu = (resId) => {
     const url = (MENU_API + resId);
     const response = await fetch(url);
     const jsonResponse = await response.json();
-    console.log(jsonResponse?.data);
+    console.log(jsonResponse);
     setResInfo(jsonResponse?.data);
   };
 
