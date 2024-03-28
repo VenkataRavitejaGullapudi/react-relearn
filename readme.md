@@ -21,6 +21,17 @@
 - Production Builds - Parcel can create production builds with code minification and asset optimization out of the box, no need to install additional plugins or bundles.s
 
 
+# Redux Toolkit
+- Install libraries
+  - @reduxjs/toolkit
+  - react-redux
+- Build our store
+- Connect store to our app
+- Create required slices
+- Dispatch Actions
+- Selector - to get data from store by subscribing to store.
+
+
 
 # Food ordering app
 /* 
